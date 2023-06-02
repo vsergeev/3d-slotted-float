@@ -10,80 +10,101 @@
 
 /* [Basic] */
 
-// in mm
-float_diameter = 20;
-
-// in mm
-float_length = 22.5;
-
 part = "both"; // [both, float, peg]
+
+// in mm
+float_xy_diameter = 20;
+
+// in mm
+float_z_length = 22.5;
 
 /* [Advanced] */
 
 // in mm, can be reduced to 0.1 for filaments with less expansion
-float_slot_width = 0.2;
+float_xy_slot_width = 0.2;
 
-// in mm, can be increased (e.g. 0.25) for less flexible filaments
-peg_clearance = 0;
-
-// in mm
-peg_diameter = 5;
+// in mm, can be increased to 0.25 for less flexible filaments
+float_peg_xy_clearance = 0;
 
 // in mm
-peg_base_height = 3;
+peg_xy_diameter = 5;
 
 // in mm
-peg_bore_diameter = 1.5;
+peg_z_base_height = 3;
+
+// in mm
+peg_xy_base_lip = 1.5;
+
+// in mm
+peg_xy_bore_diameter = 1.5;
+
+// peg length scale factor
+peg_z_length_scale = 1.05;
+
+// peg taper scale factor
+peg_xy_taper_scale = 1.05;
 
 /* [Hidden] */
 
 $fn = 70;
 
-module float(diameter, length) {
-    cutoff = 0.15;
+/******************************************************************************/
+/* 3D Extrusions */
+/******************************************************************************/
+
+module float() {
+    cutoff = 0.15; /* 85% */
 
     difference() {
-        /* 85% Ellipsoid */
+        /* Ellipsoid */
         intersection() {
-            translate([0, 0, (length * (1 - cutoff)) / 2])
-                scale([1, 1, (length * (1 + cutoff)) / diameter])
-                    sphere(d=diameter);
-            cylinder(h=length * 2, d=diameter * 2);
+            translate([0, 0, (float_z_length * (1 - cutoff)) / 2])
+                scale([1, 1, (float_z_length * (1 + cutoff)) / float_xy_diameter])
+                    sphere(d=float_xy_diameter);
+            cylinder(h=float_z_length * 2, d=float_xy_diameter * 2);
         }
+
         /* Bore */
-        translate([0, 0, -length / 4])
-            cylinder(h=length * 2, d=peg_diameter + peg_clearance);
+        translate([0, 0, -float_z_length / 4])
+            cylinder(h=float_z_length * 2, d=peg_xy_diameter + float_peg_xy_clearance);
+
         /* Line Slot */
-        translate([0, -float_slot_width / 2, -length / 4])
-            cube([diameter / 1.5, float_slot_width, length * 2]);
+        translate([0, -float_xy_slot_width / 2, -float_z_length / 4])
+            cube([float_xy_diameter / 1.5, float_xy_slot_width, float_z_length * 2]);
     }
 }
 
-module peg(length) {
-    length_scale = 1.05;
-    diameter_min_scale = 1.00;
-    diameter_max_scale = 1.05;
-    base_diameter = diameter_max_scale * peg_diameter + 1.5;
+module peg() {
+    difference() {
+        union() {
+            /* Base */
+            translate([0, 0, peg_z_length_scale * float_z_length])
+                cylinder(h=peg_z_base_height, d=peg_xy_taper_scale * peg_xy_diameter + peg_xy_base_lip);
 
-    //translate([0, 0, -(length_scale - 1)*length])
-        difference() {
-            union() {
-                /* Base */
-                translate([0, 0, length * length_scale])
-                    cylinder(h=peg_base_height, d=base_diameter);
-                /* Tapered Peg */
-                cylinder(h=length * length_scale, d1=diameter_min_scale * peg_diameter, d2=diameter_max_scale * peg_diameter);
-            }
-            /* Bore */
-            translate([0, 0, -(length * length_scale) / 4])
-                cylinder(h=length * length_scale * 2, d=peg_bore_diameter);
+            /* Tapered Peg */
+            cylinder(h=peg_z_length_scale * float_z_length, d1=peg_xy_diameter, d2=peg_xy_taper_scale * peg_xy_diameter);
         }
+
+        /* Bore */
+        translate([0, 0, -peg_z_length_scale * float_z_length / 4])
+            cylinder(h=peg_z_length_scale * float_z_length * 2, d=peg_xy_bore_diameter);
+    }
 }
 
-if (part == "both" || part == "float")
-    color("yellow")
-        float(float_diameter, float_length);
+/******************************************************************************/
+/* Top-level */
+/******************************************************************************/
 
-if (part == "both" || part == "peg")
+if (part == "both") {
+    color("yellow")
+        float();
+    translate([0, 0, -(peg_z_length_scale - 1) * float_z_length])
+        color("grey")
+            peg();
+} else if (part == "float") {
+    color("yellow")
+        float();
+} else if (part == "peg") {
     color("grey")
-        peg(float_length);
+        peg();
+}

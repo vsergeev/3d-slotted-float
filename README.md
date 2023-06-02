@@ -22,12 +22,12 @@ A parametric slotted float that can be used in both fixed and slip float configu
 
 **Parameters:**
 
-* `float_diameter` - diameter of float, default 20mm
-* `float_length` - length of float, default 22.5mm
-* `float_slot_width` - line slot width, default 0.2mm, can be reduced (e.g. 0.1) for filaments with less expansion
-* `peg_clearance` - clearance in peg bore, default 0mm, can be increased (e.g 0.25) for less flexible filaments
-* `peg_diameter` - diameter of peg, default 5mm
-* `peg_base_height` - height of peg base, default 3mm
+* `float_xy_diameter` - diameter of float, default 20mm
+* `float_z_length` - length of float, default 22.5mm
+* `float_xy_slot_width` - line slot width, default 0.2mm, can be reduced (e.g. 0.1) for filaments with less expansion
+* `float_peg_xy_clearance` - clearance in peg bore, default 0mm, can be increased (e.g 0.25) for less flexible filaments
+* `peg_xy_diameter` - diameter of peg, default 5mm
+* `peg_z_base_height` - height of peg base, default 3mm
 
 **Design:** [slotted_float.scad](slotted_float.scad)
 
