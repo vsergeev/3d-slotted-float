@@ -41,6 +41,11 @@ A parametric slotted float that can be used in both fixed and slip float configu
 * Float - Flexible TPU, 0.20mm layer height, 5% rectilinear infill, 4 top and 4 bottom horizontal layers, 3 perimeters, no supports (see slicer image above for internal visualization)
 * Peg - PLA+ or PETG, 0.20mm layer height, 100% infill, no supports
 
+**Filaments Used:**
+
+* TPU - [YOYI 95A TPU Yellow](https://www.amazon.com/gp/product/B07F1T4Q8F/)
+* PLA+ - [eSUN PLA+ Black](https://www.amazon.com/eSUN-1-75mm-Printer-Filament-2-2lbs/dp/B01EKEMDA6/)
+
 **Thingiverse:** TBD
 
 **License**: [![CC-BY](https://i.creativecommons.org/l/by/4.0/80x15.png)](http://creativecommons.org/licenses/by/4.0/)
