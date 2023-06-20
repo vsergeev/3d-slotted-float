@@ -46,6 +46,6 @@ A parametric slotted float that can be used in both fixed and slip float configu
 * TPU - [YOYI 95A TPU Yellow](https://www.amazon.com/gp/product/B07F1T4Q8F/)
 * PLA+ - [eSUN PLA+ Black](https://www.amazon.com/eSUN-1-75mm-Printer-Filament-2-2lbs/dp/B01EKEMDA6/)
 
-**Thingiverse:** TBD
+**Thingiverse:** https://www.thingiverse.com/thing:6085474
 
 **License**: [![CC-BY](https://i.creativecommons.org/l/by/4.0/80x15.png)](http://creativecommons.org/licenses/by/4.0/)
